@@ -34,6 +34,7 @@ const baseProps = {
 	idKey: 'rscMarkId',
 	lineTypes: [],
 	lineWidths: [],
+	locale: 'en-US',
 	symbolShapes: [],
 	symbolSizes: [],
 	chartWidth: 400,
@@ -80,6 +81,17 @@ describe('useSpec memoization', () => {
 		);
 
 		rerender({ description: 'updated' });
+
+		expect(mockBuildSpec).toHaveBeenCalledTimes(2);
+	});
+
+	test('rebuilds spec when locale changes', () => {
+		const { rerender } = renderHook(
+			({ locale }: { locale: 'en-US' | 'de-DE' }) => useSpec({ ...baseProps, locale }),
+			{ initialProps: { locale: 'en-US' as 'en-US' | 'de-DE' } }
+		);
+
+		rerender({ locale: 'de-DE' });
 
 		expect(mockBuildSpec).toHaveBeenCalledTimes(2);
 	});

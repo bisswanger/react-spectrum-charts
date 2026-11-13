@@ -17,6 +17,7 @@ import {
   getLabelFormat,
   getLabelOffset,
   getLabelValue,
+  getTimeLabelFormats,
   labelIsParallelToAxis,
 } from './axisLabelUtils';
 import { defaultAxisOptions } from './axisTestUtils';
@@ -30,6 +31,29 @@ describe('getLabelValue()', () => {
     expect(getLabelValue(1)).toEqual(1);
     expect(getLabelValue('test')).toEqual('test');
   });
+});
+
+describe('getTimeLabelFormats()', () => {
+  test('uses a 12-hour clock for locales whose time format includes an AM/PM period', () => {
+    expect(getTimeLabelFormats('hour', 'en-US')).toEqual({
+      secondaryLabelFormat: '%-I %p',
+      primaryLabelFormat: '%b %-d',
+      tickCount: 'hour',
+    });
+    expect(getTimeLabelFormats('minute', 'en-US').secondaryLabelFormat).toBe('%-I:%M %p');
+  });
+
+  test.each(['de-DE', 'es-ES', 'fr-FR', 'it-IT', 'pt-BR'] as const)(
+    'uses a 24-hour clock for %s',
+    (locale) => {
+      expect(getTimeLabelFormats('hour', locale)).toEqual({
+        secondaryLabelFormat: '%H',
+        primaryLabelFormat: '%b %-d',
+        tickCount: 'hour',
+      });
+      expect(getTimeLabelFormats('minute', locale).secondaryLabelFormat).toBe('%H:%M');
+    }
+  );
 });
 
 describe('getLabelOffset()', () => {

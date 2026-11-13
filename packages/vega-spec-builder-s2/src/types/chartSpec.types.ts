@@ -9,9 +9,10 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Data, Spec } from 'vega';
+import { Data, Locale, NumberLocale, Spec, TimeLocale } from 'vega';
 
 import { AnimationType } from '@spectrum-charts/core-s2/constants';
+import { LocaleCode, NumberLocaleCode, TimeLocaleCode } from '@spectrum-charts/core-s2/locales';
 
 import { AxisOptions } from './axis/index.js';
 import { LegendOptions } from './legendSpec.types.js';
@@ -33,6 +34,10 @@ import { TitleOptions } from './titleSpec.types.js';
 export type ColorScheme = 'light' | 'dark';
 export type Height = number | `${number}%`;
 export type HighlightedItem = string | number | (string | number)[];
+export type ChartLocale =
+  | Locale
+  | LocaleCode
+  | { number?: NumberLocaleCode | NumberLocale; time?: TimeLocaleCode | TimeLocale };
 export type TooltipAnchor = 'cursor' | 'mark';
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type Width = number | 'auto' | string;
@@ -81,6 +86,8 @@ export interface ChartOptions {
   data?: ChartData[];
   /** Accessible name for the chart, read by screen readers. Describe what the chart shows. */
   description?: string;
+  /** Number and time locale used to build and render the chart. Defaults to `en-US`. */
+  locale?: ChartLocale;
   /** Shapes assigned to series when a mark's `symbolShape` uses a field. Defaults to `['rounded-square']`. */
   symbolShapes?: SymbolShapes;
   /** Smallest and largest symbol size when a mark's `size` uses a field. Defaults to `['XS', 'XL']`. */

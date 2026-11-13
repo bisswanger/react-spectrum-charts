@@ -20,6 +20,7 @@ import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_COLOR_SCHEME,
   DEFAULT_LINE_TYPES,
+  DEFAULT_LOCALE,
   FILTERED_TABLE,
   HIGHLIGHTED_GROUP,
   LINEAR_COLOR_SCALE,
@@ -95,6 +96,7 @@ export function buildSpec({
   legends = [],
   lineTypes = DEFAULT_LINE_TYPES as LineType[],
   lineWidths = ['M'],
+  locale = DEFAULT_LOCALE,
   marks = [],
   opacities,
   s2 = false,
@@ -133,7 +135,7 @@ export function buildSpec({
 
   let { areaCount, barCount, bulletCount, comboCount, donutCount, lineCount, scatterCount, vennCount } =
     initializeComponentCounts();
-  const specOptions = { colorScheme, idKey, highlightedItem, s2 };
+  const specOptions = { colorScheme, idKey, highlightedItem, locale, s2 };
   
   // Collect granularity first, so Line can use it when axis is time-based
   spec = [...axes].reduce((acc: ScSpec, axis) => {

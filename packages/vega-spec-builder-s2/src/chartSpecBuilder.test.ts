@@ -90,6 +90,20 @@ const defaultSpecOptions: ChartSpecOptions = {
 
 const defaultBarOptions: BarOptions = { markType: 'bar', dimension: 'browser', metric: 'downloads', color: 'series' };
 
+describe('localized time axes', () => {
+  const getHourlyAxisFormats = (locale: ChartOptions['locale']) =>
+    buildSpec({
+      locale,
+      axes: [{ position: 'bottom', labelFormat: 'time', granularity: 'hour' }],
+      marks: [{ markType: 'bar', dimension: 'datetime' }],
+    }).axes?.map((axis) => axis.format);
+
+  test('uses the locale while building the axis spec', () => {
+    expect(getHourlyAxisFormats('en-US')).toEqual(['%-I %p', '%b %-d']);
+    expect(getHourlyAxisFormats('de-DE')).toEqual(['%H', '%b %-d']);
+  });
+});
+
 describe('hidden-series axis domains', () => {
   const data = [
     { series: 'A', x: 1, value: 1000 },

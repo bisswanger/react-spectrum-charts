@@ -11,7 +11,7 @@
  */
 import { Align, Baseline, FontWeight, NumberValue, ScaleType } from 'vega';
 
-import { ColorScheme } from '../chartSpec.types';
+import { ChartLocale, ColorScheme } from '../chartSpec.types';
 import { NumberFormat, Orientation, PartiallyRequired, Position } from '../specUtil.types';
 import { ChartTooltipOptions } from '../dialogs/chartTooltipSpec.types';
 import { AxisAnnotationOptions } from './axisAnnotationSpec.types';
@@ -185,6 +185,7 @@ export interface AxisSpecOptions extends PartiallyRequired<AxisOptions, AxisOpti
   name: string;
   colorScheme: ColorScheme;
   index: number;
+  locale?: ChartLocale;
   scaleType: ScaleType;
   vegaLabelAlign?: Align;
   vegaLabelBaseline?: Baseline;

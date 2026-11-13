@@ -22,8 +22,10 @@ import {
   TickCount,
 } from 'vega';
 
+import { getLocale } from '@spectrum-charts/locales';
+
 import { getTextNumberFormat } from '../textUtils';
-import { AxisSpecOptions, Granularity, Label, LabelAlign, Orientation, Position } from '../types';
+import { AxisSpecOptions, ChartLocale, Granularity, Label, LabelAlign, Orientation, Position } from '../types';
 import { isVerticalAxis } from './axisUtils';
 
 /**
@@ -41,18 +43,23 @@ export const getLabelValue = (label: Label | number | string): string | number =
 /**
  * Gets the label format values based on the granularity
  * @param granularity
+ * @param locale
  * @returns [secondaryFormat, primaryFormat, tickCount]
  */
 export const getTimeLabelFormats = (
-  granularity: Granularity
+  granularity: Granularity,
+  locale?: ChartLocale
 ): { secondaryLabelFormat: string; primaryLabelFormat: string; tickCount: TickCount } => {
+  const uses24HourTime = getLocale(locale).time?.time.includes('%H') ?? false;
+  const hourFormat = uses24HourTime ? '%H' : '%-I %p';
+  const minuteFormat = uses24HourTime ? '%H:%M' : '%-I:%M %p';
   switch (granularity) {
     case 'second':
-      return { secondaryLabelFormat: ':%S', primaryLabelFormat: '%-I:%M %p', tickCount: 'second' };
+      return { secondaryLabelFormat: ':%S', primaryLabelFormat: minuteFormat, tickCount: 'second' };
     case 'minute':
-      return { secondaryLabelFormat: '%-I:%M %p', primaryLabelFormat: '%b %-d', tickCount: 'minute' };
+      return { secondaryLabelFormat: minuteFormat, primaryLabelFormat: '%b %-d', tickCount: 'minute' };
     case 'hour':
-      return { secondaryLabelFormat: '%-I %p', primaryLabelFormat: '%b %-d', tickCount: 'hour' };
+      return { secondaryLabelFormat: hourFormat, primaryLabelFormat: '%b %-d', tickCount: 'hour' };
     case 'day':
       return { secondaryLabelFormat: '%-d', primaryLabelFormat: '%b', tickCount: 'day' };
     case 'week':

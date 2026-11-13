@@ -9,7 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Data, Spec } from 'vega';
+import { Data, Locale, NumberLocale, Spec, TimeLocale } from 'vega';
+
+import { LocaleCode, NumberLocaleCode, TimeLocaleCode } from '@spectrum-charts/locales';
 
 import { AxisOptions } from './axis';
 import { LegendOptions } from './legendSpec.types';
@@ -31,6 +33,10 @@ import { TitleOptions } from './titleSpec.types';
 export type ColorScheme = 'light' | 'dark';
 export type Height = number | `${number}%`;
 export type HighlightedItem = string | number | (string | number)[];
+export type ChartLocale =
+  | Locale
+  | LocaleCode
+  | { number?: NumberLocaleCode | NumberLocale; time?: TimeLocaleCode | TimeLocale };
 export type TooltipAnchor = 'cursor' | 'mark';
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type Width = number | 'auto' | string;
@@ -75,6 +81,8 @@ export interface ChartOptions {
   data?: ChartData[];
   /** Chart description. Sets the aria-label attribute for the chart container. @see https://vega.github.io/vega/docs/specification/ */
   description?: string;
+  /** Number and time locale used to build and render the chart. Defaults to `en-US`. */
+  locale?: ChartLocale;
   /** Symbol shape scale. */
   symbolShapes?: SymbolShapes;
   /** Symbol size scale. Values define the min and max size in that order. */

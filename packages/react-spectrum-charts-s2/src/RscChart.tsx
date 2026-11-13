@@ -140,6 +140,7 @@ export const RscChart = ({ ref, ...props }: RscChartProps & { ref?: Ref<ChartHan
     symbolSizes,
     lineTypes,
     lineWidths,
+    locale,
     opacities,
     colorScheme,
     title,

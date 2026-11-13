@@ -85,6 +85,7 @@ export const RscChart = forwardRef<ChartHandle, RscChartProps>((props, forwarded
     symbolSizes,
     lineTypes,
     lineWidths,
+    locale,
     opacities,
     colorScheme,
     s2,

@@ -31,6 +31,7 @@ import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_COLOR_SCHEME,
   DEFAULT_LINE_TYPES,
+  DEFAULT_LOCALE,
   FILTERED_TABLE,
   HIGHLIGHTED_GROUP,
   LINEAR_COLOR_SCALE,
@@ -122,6 +123,7 @@ export function buildSpec({
   legends = [],
   lineTypes = DEFAULT_LINE_TYPES as LineType[],
   lineWidths = ['M'],
+  locale = DEFAULT_LOCALE,
   marks = [],
   opacities,
   symbolShapes = ['rounded-square'],
@@ -169,6 +171,7 @@ export function buildSpec({
     highlightedItem,
     highlightedSeries,
     legendHighlightSignals,
+    locale,
   };
   spec = [...marks].reduce((acc: ScSpec, mark) => {
     switch (mark.markType) {

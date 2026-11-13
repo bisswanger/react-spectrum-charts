@@ -11,7 +11,7 @@
  */
 import { Align, Baseline, FontWeight, NumberValue, ScaleType } from 'vega';
 
-import { ColorScheme } from '../chartSpec.types.js';
+import { ChartLocale, ColorScheme } from '../chartSpec.types.js';
 import { NumberFormat, Orientation, PartiallyRequired, Position } from '../specUtil.types.js';
 import { AxisAnnotationOptions } from './axisAnnotationSpec.types.js';
 import { AxisThumbnailOptions } from './axisThumbnailSpec.types.js';
@@ -142,6 +142,7 @@ export interface AxisSpecOptions extends PartiallyRequired<AxisOptions, AxisOpti
   name: string;
   colorScheme: ColorScheme;
   index: number;
+  locale?: ChartLocale;
   scaleType: ScaleType;
   vegaLabelAlign?: Align;
   vegaLabelBaseline?: Baseline;

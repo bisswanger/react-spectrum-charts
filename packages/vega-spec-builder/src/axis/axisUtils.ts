@@ -101,6 +101,7 @@ const getSecondaryTimeAxis = (
     hasTooltip,
     labelAlign,
     labelOrientation,
+    locale,
     position,
     tickCountLimit,
     tickCountMinimum,
@@ -110,7 +111,7 @@ const getSecondaryTimeAxis = (
     vegaLabelBaseline,
   }: AxisSpecOptions
 ): Axis => {
-  const { tickCount } = getTimeLabelFormats(granularity);
+  const { tickCount } = getTimeLabelFormats(granularity, locale);
   const resolvedTickCount =
     tickCountLimit !== undefined || tickCountMinimum !== undefined
       ? getTickCount(position, tickCountMinimum, tickCountLimit, grid)
@@ -126,17 +127,18 @@ const getSecondaryTimeAxis = (
     formatType: 'time',
     labelAngle: getLabelAngle(labelOrientation),
     labelSeparation: 12,
-    ...getSecondaryTimeAxisLabelFormatting(granularity, position, hasTooltip),
+    ...getSecondaryTimeAxisLabelFormatting(granularity, locale, position, hasTooltip),
     ...getLabelAnchorValues(position, labelOrientation, labelAlign, vegaLabelAlign, vegaLabelBaseline),
   };
 };
 
 const getSecondaryTimeAxisLabelFormatting = (
   granularity: Granularity,
+  locale: AxisSpecOptions['locale'],
   position: Position,
   hasTooltip?: boolean
 ): Partial<Axis> => {
-  const { secondaryLabelFormat, primaryLabelFormat } = getTimeLabelFormats(granularity);
+  const { secondaryLabelFormat, primaryLabelFormat } = getTimeLabelFormats(granularity, locale);
   const isVerticalAxis = ['left', 'right'].includes(position);
   if (isVerticalAxis) {
     return {
@@ -180,6 +182,7 @@ const getPrimaryTimeAxis = (
     labelAlign,
     labelOrientation,
     labelFontWeight,
+    locale,
     position,
     tickCountLimit,
     tickCountMinimum,
@@ -191,7 +194,7 @@ const getPrimaryTimeAxis = (
   if (['left', 'right'].includes(position)) {
     return [];
   }
-  const { primaryLabelFormat, tickCount } = getTimeLabelFormats(granularity);
+  const { primaryLabelFormat, tickCount } = getTimeLabelFormats(granularity, locale);
   const resolvedTickCount =
     tickCountLimit !== undefined || tickCountMinimum !== undefined
       ? getTickCount(position, tickCountMinimum, tickCountLimit)
